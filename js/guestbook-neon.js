@@ -220,18 +220,6 @@ function tConvert(time) {
   return `${hours}:${minutes}`;
 }
 
-// ===============================
-// Auto-load latest entries on page load
-// ===============================
-
-window.addEventListener("load", loadLatestEntries);
-
-// Load all entries when popup opens
-window.addEventListener("hashchange", () => {
-  if (location.hash === "#AllEntries") {
-    loadAllEntries();
-  }
-});
 
 function mapTo1994(dateString) {
   const realDate = new Date(dateString);
@@ -259,3 +247,17 @@ function mapTo1994(dateString) {
   return `${month} ${day}, ${year}`;
 }
 
+
+
+// ===============================
+// Auto-load latest entries on page load
+// ===============================
+
+window.addEventListener("load", loadLatestEntries);
+
+// Load all entries when popup opens
+window.addEventListener("hashchange", () => {
+  if (location.hash === "#AllEntries") {
+    loadAllEntries();
+  }
+});

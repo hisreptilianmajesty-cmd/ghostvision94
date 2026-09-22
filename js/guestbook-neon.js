@@ -63,34 +63,21 @@ function sanitize(str) {
 }
 
 // ===============================
-// Safe Timestamp Parser (Fixes NaN)
+// Safe Timestamp Parser (DD/MM/YYYY 24h)
 // ===============================
 
 function parseSheetTimestamp(ts) {
-  // Example formats:
-  // "9/22/2026 12:41 PM"
-  // "9/22/26 12:41:00 PM"
-
-  const parts = ts.split(" ");
-  const datePart = parts[0];      // "9/22/2026"
-  const timePart = parts[1];      // "12:41" or "12:41:00"
-  const ampm = parts[2] || "AM";  // "PM" or "AM"
-
-  const [month, day, yearRaw] = datePart.split("/").map(Number);
-  const year = yearRaw < 100 ? 2000 + yearRaw : yearRaw;
-
-  let [hours, minutes] = timePart.split(":").map(Number);
-
-  // Convert to 24-hour
-  if (ampm === "PM" && hours !== 12) hours += 12;
-  if (ampm === "AM" && hours === 12) hours = 0;
+  // Example: "22/09/2026 10:50:53"
+  const [datePart, timePart] = ts.split(" ");
+  const [day, month, year] = datePart.split("/").map(Number);
+  const [hours, minutes] = timePart.split(":").map(Number);
 
   return new Date(year, month - 1, day, hours, minutes);
 }
 
 // ===============================
 // 1994 Date Mapping (Option B)
-// Today (9/22/2026) → August 2, 1994
+// Today (22/09/2026) → August 2, 1994
 // ===============================
 
 function mapTo1994(dateString) {
@@ -101,8 +88,9 @@ function mapTo1994(dateString) {
 
   const mapped = new Date(1994, 0, 1);
 
-  // Shift backward by 1 day so 9/22/2026 → 8/2/1994
-  mapped.setDate(mapped.getDate() + dayOfYear - 1);
+  // Offset so 22/09/2026 (day 265) → August 2, 1994 (day 214)
+  const OFFSET_DAYS = -51;
+  mapped.setDate(mapped.getDate() + dayOfYear + OFFSET_DAYS);
 
   const months = [
     "January","February","March","April","May","June",

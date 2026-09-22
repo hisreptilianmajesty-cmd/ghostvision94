@@ -157,7 +157,11 @@
     text-align: center;" class="aterisk_before" for="gform"> indicates a required field</label>
       <br>
 		
-    <form name="gform" id="gform" enctype="text/plain" action="GOOGLE_FORM_URL" target="hidden_iframe" onsubmit="submitted=true;">
+    <form name="gform" id="gform"
+            method="POST"
+            action="https://docs.google.com/forms/d/e/1FAIpQLSczKWxEpkr-Psc230Q3gosFNSil5BzKIjsBoTeuWHo111lMwg/formResponse"
+            target="hidden_iframe"
+            onsubmit="submitted=true;">
       
        <label for="GOOGLE_ENTRY_ID_Name"  class="aterisk_after">Name </label>
       

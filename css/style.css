@@ -727,3 +727,125 @@ a:visited { color: var(--accent); }
   #sidebar { padding-right: 0; margin-bottom: 8px; }
   .gallery-grid { grid-template-columns: 1fr 1fr; }
 }
+/* ──────────────────────────────── */
+/*  POPUP OVERLAY (safe version)    */
+/* ──────────────────────────────── */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 500ms;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup,
+.sign-guest-book-popup {
+  margin: 40px auto;
+  padding: 20px;
+  background: var(--panel-bg);
+  border: 3px outset var(--border-light);
+  width: 40%;
+  max-width: 500px;
+  color: var(--text);
+  box-shadow: 0 0 20px var(--glow);
+  position: relative;
+}
+
+.popup h2,
+.sign-guest-book-popup h1 {
+  color: var(--heading);
+  text-shadow: 0 0 8px var(--glow);
+  margin-top: 0;
+}
+
+.popup .close,
+.sign-guest-book-popup .close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  color: var(--accent);
+  text-decoration: none;
+}
+.popup .close:hover,
+.sign-guest-book-popup .close:hover {
+  color: var(--heading);
+}
+
+/* ──────────────────────────────── */
+/*  GUESTBOOK ENTRY (safe version)  */
+/* ──────────────────────────────── */
+
+.entry {
+  background: var(--panel-bg);
+  border: 2px inset var(--border-dark);
+  padding: 0.75rem 1rem;
+  margin-bottom: 8px;
+}
+.entry:nth-child(even) {
+  background: #000;
+}
+
+.entry-info {
+  font-style: italic;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+.entry-info .author {
+  color: var(--heading);
+  font-weight: bold;
+}
+
+/* ──────────────────────────────── */
+/*  FORM ELEMENTS (safe version)    */
+/* ──────────────────────────────── */
+
+.form-element,
+input:not([type="submit"]),
+.emailFormCard-TextArea {
+  width: 90%;
+  padding: 0.5rem;
+  background: var(--counter-bg);
+  border: 2px inset var(--border-dark);
+  color: var(--text);
+  resize: none;
+}
+
+.form-element:focus,
+input:not([type="submit"]):focus {
+  outline: none;
+  border: 2px outset var(--border-light);
+  background: #000;
+}
+
+input:not([type="submit"])::placeholder {
+  color: var(--accent);
+}
+
+/* Validation */
+input:not([type="submit"]):not(:focus):not(:placeholder-shown):valid {
+  border-color: #00FF00;
+}
+input:not([type="submit"]):not(:focus):not(:placeholder-shown):invalid {
+  border-color: #FF0000;
+}
+
+/* Buttons */
+.form-button {
+  padding: 1rem 3rem;
+  background: var(--panel-bg);
+  border: 3px outset var(--border-light);
+  color: var(--link);
+  text-transform: uppercase;
+}
+.form-button:hover {
+  background: var(--accent);
+  border-style: inset;
+  color: var(--bg);
+}

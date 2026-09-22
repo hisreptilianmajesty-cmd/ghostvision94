@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="generator" content="create-geocities-app">
   <title>GhostVision '94 — Guestbook</title>
-<link href="https://fonts.googleapis.com/css?family=Muli|Ovo" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Muli|Ovo" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
+
 <body>
 
 <canvas id="matrix-canvas"></canvas>
 <div id="matrix-hint">[M] toggle matrix</div>
 
+<!-- Lightbox -->
 <div id="lightbox">
   <span id="lightbox-close">✕</span>
   <img id="lightbox-img" src="" alt="">
@@ -24,15 +27,16 @@
 <div id="page-wrapper">
 <table id="main-table" cellpadding="0" cellspacing="0">
 
+  <!-- Header -->
   <tr>
     <td colspan="2" id="header-cell">
-      </div>
-      <img src=GhostVision94.jpg>
+      <img src="GhostVision94.jpg">
     </td>
   </tr>
 
   <tr id="content-row">
 
+    <!-- Sidebar -->
     <td id="sidebar">
       <div class="panel">
         <div class="panel-title">📡 Navigation</div>
@@ -40,12 +44,14 @@
         <a href="gallery.html" class="nav-link">🖼️ Gallery</a>
         <a href="guestbook.html" class="nav-link nav-active">📖 Guestbook</a>
       </div>
+
       <div class="panel" style="text-align:center;">
         <div class="panel-title">🌐 Site Info</div>
         <span class="spinning-globe">🌍</span>
         <span id="page-clock">00:00:00</span>
       </div>
-        <div class="panel" style="text-align:center;font-size:0.75rem;">
+
+      <div class="panel" style="text-align:center;font-size:0.75rem;">
         <div class="panel-title">📊 Visitors</div>
         <div id="visitor-counter-box">
           <div class="counter-label">You are visitor 13762</div>
@@ -54,77 +60,64 @@
       </div>
     </td>
 
+    <!-- Main Content -->
     <td id="main-content">
 
-      <!-- Sign form -->
+      <!-- Sign Form Panel -->
       <div class="panel">
-	<center><img src=ksghosty_e0.gif></center>
+        <center><img src="ksghosty_e0.gif"></center>
         <div class="panel-title">✍️ Sign My Guestbook!</div>
         <p style="font-size:0.8rem;margin-bottom:10px;">
           Thanks for visiting! Leave your mark and let me know you were here. 📖
         </p>
-	 <div class="links">
-           <a href="#AllEntries">View All Entries</a>
-            <a href="#SignGuestBook">Sign the Guestbook</a>
-	    <a onClick="window.location.reload();">Refresh Guestbook</a>	
-           
+
+        <div class="links">
+          <a href="#AllEntries">View All Entries</a>
+          <a href="#SignGuestBook">Sign the Guestbook</a>
+          <a onClick="window.location.reload();">Refresh Guestbook</a>
         </div>
 
-
-	
-<div id="AllEntries" class="overlay">
-	<div class="popup">
-		<h2>All Entries</h2>
-		<a class="close" href="#">&times;</a>
-		<div id="AllEntries_Content" class="content" style="height: 25em;overflow-y: auto;">
-	
+        <!-- All Entries Popup -->
+        <div id="AllEntries" class="overlay">
+          <div class="popup">
+            <h2>All Entries</h2>
+            <a class="close" href="#">&times;</a>
+            <div id="AllEntries_Content" class="content" style="height: 25em; overflow-y: auto;">
             </div>
-		</div>
-	</div>
-</div>
-
+          </div>
+        </div>
 
       </div>
 
-      <!-- Existing entries -->
+      <!-- Existing Entries -->
       <div class="panel">
         <div class="panel-title">📜 Previous Entries</div>
 
         <div class="guestbook-entry">
           <span class="entry-name">xXxJDAWGxXx</span>
           <span class="entry-date">March 14, 1994</span>
-          <p style="margin-top:4px;font-size:0.85rem;">
-            GHOSTVISION RULES!
-          </p>
+          <p>GHOSTVISION RULES!</p>
           <div style="font-size:0.7rem;opacity:0.7;">From: California, USA</div>
         </div>
 
         <div class="guestbook-entry">
           <span class="entry-name">💾 NetNinja42</span>
           <span class="entry-date">February 28, 1994</span>
-          <p style="margin-top:4px;font-size:0.85rem;">
-            Great homepage! The animated stuff is rad. Can we exchange links?
-            Check out my site too!
-          </p>
+          <p>Great homepage! The animated stuff is rad. Can we exchange links?</p>
           <div style="font-size:0.7rem;opacity:0.7;">From: The Internet</div>
         </div>
 
         <div class="guestbook-entry">
           <span class="entry-name">Ghosts Aren't Real Idiot</span>
           <span class="entry-date">January 5, 1994</span>
-          <p style="margin-top:4px;font-size:0.85rem;">
-		Bunch of stupid shit here. Get real nerd!
-          </p>
+          <p>Bunch of stupid shit here. Get real nerd!</p>
           <div style="font-size:0.7rem;opacity:0.7;">From: New York, USA</div>
         </div>
 
         <div class="guestbook-entry">
           <span class="entry-name">🌸 StarChild</span>
           <span class="entry-date">December 25, 1993</span>
-          <p style="margin-top:4px;font-size:0.85rem;">
-            Merry Christmas! 🎄 Found your page totally by accident and I'm so glad I did.
-            Signing from my shiny new Pentium II!!
-          </p>
+          <p>Merry Christmas! Found your page totally by accident!</p>
           <div style="font-size:0.7rem;opacity:0.7;">From: Canada 🍁</div>
         </div>
 
@@ -133,12 +126,13 @@
     </td>
   </tr>
 
+  <!-- Footer -->
   <tr>
     <td colspan="2" id="footer-cell">
       <div class="star-divider">✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦</div>
       <p style="font-size:0.75rem;margin:4px 0;">
-        © 1994 <strong>Mike McClanahan</strong> — All Rights Reserved
-        &nbsp;|&nbsp; <a href="index.html">Home</a>
+        © 1994 <strong>Mike McClanahan</strong> — All Rights Reserved |
+        <a href="index.html">Home</a>
       </p>
       <p style="font-size:0.7rem;margin:4px 0;">
         <span class="netscape-badge">Best viewed in Netscape Navigator 4.0<br>at 800×600 resolution</span>
@@ -148,81 +142,66 @@
 
 </table>
 </div>
+
+<!-- Sign Guestbook Popup -->
 <div id="SignGuestBook" class="overlay">
-	<div id="SendForm" class="sign-guest-book-popup">
-		<h1>Sign The Guestbook</h1>
-		<a class="close" href="#">&times;</a>
-		<div class="content">
-      <label style="display: block;
-    text-align: center;" class="aterisk_before" for="gform"> indicates a required field</label>
+  <div id="SendForm" class="sign-guest-book-popup">
+    <h1>Sign The Guestbook</h1>
+    <a class="close" href="#">&times;</a>
+
+    <div class="content">
+      <label class="aterisk_before" style="display:block;text-align:center;">
+        indicates a required field
+      </label>
       <br>
-		
-    <form name="gform" id="gform"
+
+      <!-- FORM -->
+      <form name="gform" id="gform"
             method="POST"
             action="https://docs.google.com/forms/d/e/1FAIpQLSczKWxEpkr-Psc230Q3gosFNSil5BzKIjsBoTeuWHo111lMwg/formResponse"
-            target="hidden_iframe"
-            onsubmit="submitted=true;">
-      
-       <label for="GOOGLE_ENTRY_ID_Name"  class="aterisk_after">Name </label>
-      
-        <input class="form-element short" type="text" name="GOOGLE_ENTRY_ID_Name" id="GOOGLE_ENTRY_ID_Name" placeholder="John Doe." style="background: #5EC6C8;" required>
-      
+            target="hidden_iframe">
+
+        <label for="GOOGLE_ENTRY_ID_Name" class="aterisk_after">Name</label>
+        <input class="form-element short"
+               type="text"
+               id="GOOGLE_ENTRY_ID_Name"
+               name="GOOGLE_ENTRY_ID_Name"
+               placeholder="John Doe."
+               required>
+
         <label for="GOOGLE_ENTRY_ID_Email">GitHub Username</label>
-      
-   
-        <input class="form-element short" type="text" name="GOOGLE_ENTRY_ID_Email" id="GOOGLE_ENTRY_ID_Email" placeholder="MarketingPip" style="background: #5EC6C8;">
-      
-   <label for="GOOGLE_ENTRY_ID_TextArea"  class="max-length">Guestbook Entry</label>
-      
-      <textarea class="form-element" name="GOOGLE_ENTRY_ID_TextArea" id="GOOGLE_ENTRY_ID_TextArea" rows="5" cols="30" oninvalid="this.setCustomValidity('You must sign the guestbook')"
-  oninput="this.setCustomValidity('')"  maxlength="50" placeholder="Enter Your Message Here" required></textarea>
-      
-         <label for="g-recaptcha"  class="aterisk_after">Captcha</label>      
-	 <div class="g-recaptcha"
-       data-sitekey="6LdihcktAAAAABb2yKLmjLJ_zjNPBU5K8A2Ozxiy"></div>   
-      
+        <input class="form-element short"
+               type="text"
+               id="GOOGLE_ENTRY_ID_Email"
+               name="GOOGLE_ENTRY_ID_Email"
+               placeholder="MarketingPip">
+
+        <label for="GOOGLE_ENTRY_ID_TextArea" class="max-length">Guestbook Entry</label>
+        <textarea class="form-element"
+                  id="GOOGLE_ENTRY_ID_TextArea"
+                  name="GOOGLE_ENTRY_ID_TextArea"
+                  rows="5"
+                  maxlength="50"
+                  placeholder="Enter Your Message Here"
+                  required></textarea>
+
+        <label for="g-recaptcha" class="aterisk_after">Captcha</label>
+        <div class="g-recaptcha"
+             data-sitekey="6LdihcktAAAAABb2yKLmjLJ_zjNPBU5K8A2Ozxiy"></div>
+
         <input class="form-button" type="submit" value="Submit">
         <input class="form-button" type="reset" value="Reset Form">
- 
-    </form>
-		</div>
-	</div>
+
+      </form>
+    </div>
+  </div>
 </div>
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>	
-<script src="js/main.js"></script>
-</body>
-<script type="text/javascript">
-	
-	
-  // Put your Google Entry Form ID(s) Here
-  var GOOGLE_ENTRY_ID_Name="entry.371490563";   // Name Entry ID
-		
- var GOOGLE_ENTRY_ID_Email="entry.394002833";	// Email Entry ID			
-		
-var GOOGLE_ENTRY_ID_Guestbook="entry.982526811"; // Guestbook Entry ID				
-    
-   // Put your Google Form Link Here  (Make sure to use correct link as documented)
-		
-		
 
-  var Google_Form_Link="https://docs.google.com/forms/d/e/1FAIpQLSczKWxEpkr-Psc230Q3gosFNSil5BzKIjsBoTeuWHo111lMwg/formResponse?"  
-	
-	
-	 var Google_Form_ID="128BR0KeT6EGfBZZVAeSMXQjB5b-oJz0Y7xxQPn4ejjc"  
-	 
-	 var Google_Form_Name="Form+Responses+1"  
-	
-  
-  // Google Recaptcha Key 
-	 
-	var CaptchaKey = "6LdihcktAAAAABb2yKLmjLJ_zjNPBU5K8A2Ozxiy" // put your Google Captcha Key here
-  </script> 
+<!-- Hidden iframe for Google Form submission -->
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+<!-- Your neon guestbook script -->
 <script src="js/guestbook-neon.js"></script>
-
-
-<script>
-
-
-  </script>
-
+<!-- Updated -->
+</body>
 </html>

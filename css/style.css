@@ -849,3 +849,5 @@ input:not([type="submit"]):not(:focus):not(:placeholder-shown):invalid {
   border-style: inset;
   color: var(--bg);
 }
+.form-element.short {
+  background: var(--counter-bg) !important;

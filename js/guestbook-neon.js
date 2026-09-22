@@ -1,51 +1,43 @@
 // ===============================
-// GhostVision '94 — Guestbook JS
-// Neon-compatible rewrite (Option B)
+// GhostVision '94 — Neon Guestbook JS
 // ===============================
 
-// Your confirmed Google Form entry IDs
+// Google Form Entry IDs
 const ENTRY_NAME = "entry.371490563";
 const ENTRY_EMAIL = "entry.394002833";
 const ENTRY_TEXT = "entry.982526811";
 
-// Your confirmed Google Form POST URL
+// Google Form POST URL
 const GOOGLE_FORM_POST =
   "https://docs.google.com/forms/d/e/1FAIpQLSczKWxEpkr-Psc230Q3gosFNSil5BzKIjsBoTeuWHo111lMwg/formResponse";
 
-// Find your neon popup form
+// Form + iframe
 const form = document.getElementById("gform");
-
-// Hidden iframe
 const iframe = document.getElementById("hidden_iframe");
 
-// Close popup after submit
 let submitted = false;
 
-// Inject correct attributes into the form
+// Rewrite form attributes
 form.setAttribute("method", "POST");
 form.setAttribute("action", GOOGLE_FORM_POST);
 form.setAttribute("target", "hidden_iframe");
 
-// Rewrite field names to match Google Form
+// Rewrite field names
 document.getElementById("GOOGLE_ENTRY_ID_Name").setAttribute("name", ENTRY_NAME);
 document.getElementById("GOOGLE_ENTRY_ID_Email").setAttribute("name", ENTRY_EMAIL);
 document.getElementById("GOOGLE_ENTRY_ID_TextArea").setAttribute("name", ENTRY_TEXT);
 
-// Handle form submission
+// Handle submission
 form.addEventListener("submit", function () {
   submitted = true;
 });
 
-// When iframe loads after POST, close popup
+// Close popup after iframe loads
 iframe.onload = function () {
   if (submitted) {
-    // Close popup by clearing hash
-    location.hash = "";
-
-    // Reset form
+    location.hash = ""; // close popup
     form.reset();
 
-    // Reset recaptcha if present
     if (typeof grecaptcha !== "undefined") {
       grecaptcha.reset();
     }
@@ -55,62 +47,62 @@ iframe.onload = function () {
 };
 
 // ===============================
-// Load All Entries (Google Sheet → JSON)
+// Helpers
 // ===============================
 
-// This part loads entries into #AllEntries_Content
-// You can customize this later if you want formatting changes.
-
-async function loadEntries() {
-  const container = document.getElementById("AllEntries_Content");
-  container.innerHTML = "<p style='opacity:0.7;'>Loading entries...</p>";
-
-  try {
-    // Your Google Sheet CSV export URL
-    const sheetURL =
-      "https://docs.google.com/spreadsheets/d/" +
-      "128BR0KeT6EGfBZZVAeSMXQjB5b-oJz0Y7xxQPn4ejjc" +
-      "/gviz/tq?tqx=out:csv";
-
-    const response = await fetch(sheetURL);
-    const csv = await response.text();
-
-    const rows = csv.split("\n").slice(1); // skip header
-
-    container.innerHTML = "";
-
-    rows.forEach((row) => {
-      const cols = row.split(",");
-
-      if (cols.length >= 3) {
-        const name = cols[0];
-        const email = cols[1];
-        const text = cols[2];
-
-        const entryDiv = document.createElement("div");
-        entryDiv.className = "guestbook-entry";
-        entryDiv.innerHTML = `
-          <span class="entry-name">${name}</span>
-          <span class="entry-date">${new Date().toLocaleDateString()}</span>
-          <p>${text}</p>
-          <div style="font-size:0.7rem;opacity:0.7;">From: ${email}</div>
-        `;
-        container.appendChild(entryDiv);
-      }
-    });
-  } catch (err) {
-    container.innerHTML =
-      "<p style='color:red;'>Failed to load entries.</p>";
-  }
+function sanitize(str) {
+  if (!str) return "";
+  str = str.replace(/[^\x00-\x7F]/g, ""); // remove unicode spam
+  return str.replace(/[&<>"']/g, (m) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  }[m]));
 }
 
-// Load entries when #AllEntries popup opens
-window.addEventListener("hashchange", () => {
-  if (location.hash === "#AllEntries") {
-    loadEntries();
-  }
-});
+// ===============================
+// 1994 Date Mapping (Option B)
+// Today (9/22/2026) → August 2, 1994
+// ===============================
 
+function mapTo1994(dateString) {
+  const realDate = new Date(dateString);
+
+  // Day-of-year for the real date
+  const startOfYear = new Date(realDate.getFullYear(), 0, 1);
+  const dayOfYear = Math.floor((realDate - startOfYear) / (1000 * 60 * 60 * 24));
+
+  // Map into 1994
+  const mapped = new Date(1994, 0, 1);
+
+  // Shift backward by 1 day so 9/22/2026 → 8/2/1994
+  mapped.setDate(mapped.getDate() + dayOfYear - 1);
+
+  const months = [
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December"
+  ];
+
+  const month = months[mapped.getMonth()];
+  const day = mapped.getDate();
+  const year = mapped.getFullYear();
+
+  return `${month} ${day}, ${year}`;
+}
+
+function mapTimeTo1994(dateString) {
+  const realDate = new Date(dateString);
+
+  let hours = realDate.getHours();
+  const minutes = String(realDate.getMinutes()).padStart(2, "0");
+  const ampm = hours >= 12 ? "PM" : "AM";
+
+  hours = hours % 12 || 12;
+
+  return `${hours}:${minutes} ${ampm}`;
+}
 
 // ===============================
 // Load Latest 5 Entries (Neon Version)
@@ -127,7 +119,6 @@ async function loadLatestEntries() {
     const response = await fetch(sheetURL);
     const data = await response.json();
 
-    // newest first
     const sorted = data.reverse();
 
     container.innerHTML = "";
@@ -138,14 +129,14 @@ async function loadLatestEntries() {
       const name = sanitize(row.Name);
       const text = sanitize(row.Guestbook_Entry);
 
-      const date = row.Timestamp.split(" ")[0];
-      const time = tConvert(row.Timestamp.split(" ").pop());
+      const retroDate = mapTo1994(row.Timestamp);
+      const retroTime = mapTimeTo1994(row.Timestamp);
 
       const entry = document.createElement("div");
       entry.className = "guestbook-entry";
       entry.innerHTML = `
         <span class="entry-name">${name}</span>
-        <span class="entry-date">${date} — ${time}</span>
+        <span class="entry-date">${retroDate} — ${retroTime}</span>
         <p style="margin-top:4px;font-size:0.85rem;">${text}</p>
       `;
       container.appendChild(entry);
@@ -176,14 +167,14 @@ async function loadAllEntries() {
       const name = sanitize(row.Name);
       const text = sanitize(row.Guestbook_Entry);
 
-      const date = row.Timestamp.split(" ")[0];
-      const time = tConvert(row.Timestamp.split(" ").pop());
+      const retroDate = mapTo1994(row.Timestamp);
+      const retroTime = mapTimeTo1994(row.Timestamp);
 
       const entry = document.createElement("div");
       entry.className = "guestbook-entry";
       entry.innerHTML = `
         <span class="entry-name">${name}</span>
-        <span class="entry-date">${date} — ${time}</span>
+        <span class="entry-date">${retroDate} — ${retroTime}</span>
         <p>${text}</p>
       `;
       container.appendChild(entry);
@@ -192,62 +183,6 @@ async function loadAllEntries() {
     container.innerHTML = "<p style='color:red;'>Failed to load entries.</p>";
   }
 }
-
-// ===============================
-// Helpers
-// ===============================
-
-function sanitize(str) {
-  if (!str) return "";
-  str = str.replace(/[^\x00-\x7F]/g, ""); // remove unicode spam
-  return str.replace(/[&<>"']/g, (m) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
-  }[m]));
-}
-
-function tConvert(time) {
-  // Convert "1:23 PM" → "13:23"
-  const [hms, modifier] = time.split(" ");
-  let [hours, minutes] = hms.split(":");
-
-  if (modifier === "PM" && hours !== "12") hours = String(Number(hours) + 12);
-  if (modifier === "AM" && hours === "12") hours = "00";
-
-  return `${hours}:${minutes}`;
-}
-
-
-function mapTo1994(dateString) {
-  const realDate = new Date(dateString);
-
-  // Day-of-year for the real date
-  const startOfYear = new Date(realDate.getFullYear(), 0, 1);
-  const dayOfYear = Math.floor((realDate - startOfYear) / (1000 * 60 * 60 * 24));
-
-  // Map into 1994
-  const mapped = new Date(1994, 0, 1);
-
-  // Shift backward by 1 day so 9/22/2026 → 8/2/1994
-  mapped.setDate(mapped.getDate() + dayOfYear - 1);
-
-  // Format
-  const months = [
-    "January","February","March","April","May","June",
-    "July","August","September","October","November","December"
-  ];
-
-  const month = months[mapped.getMonth()];
-  const day = mapped.getDate();
-  const year = mapped.getFullYear();
-
-  return `${month} ${day}, ${year}`;
-}
-
-
 
 // ===============================
 // Auto-load latest entries on page load

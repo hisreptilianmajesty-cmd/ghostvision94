@@ -735,14 +735,10 @@ a:visited { color: var(--accent); }
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.7);
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 500ms;
-}
-.overlay:target {
-  visibility: visible;
   opacity: 1;
+  visibility: visible;
 }
+
 
 .popup,
 .sign-guest-book-popup {

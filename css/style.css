@@ -748,7 +748,7 @@ a:visited { color: var(--accent); }
 .sign-guest-book-popup {
   margin: 40px auto;
   padding: 20px;
-  background: var(--panel-bg);
+   background: #000; /* fully opaque */
   border: 3px outset var(--border-light);
   width: 40%;
   max-width: 500px;

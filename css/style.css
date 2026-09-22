@@ -735,9 +735,16 @@ a:visited { color: var(--accent); }
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.7);
-  opacity: 1;
-  visibility: visible;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 300ms ease;
 }
+
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
 
 
 .popup,

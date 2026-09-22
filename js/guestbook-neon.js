@@ -232,3 +232,30 @@ window.addEventListener("hashchange", () => {
     loadAllEntries();
   }
 });
+
+function mapTo1994(dateString) {
+  const realDate = new Date(dateString);
+
+  // Day-of-year for the real date
+  const startOfYear = new Date(realDate.getFullYear(), 0, 1);
+  const dayOfYear = Math.floor((realDate - startOfYear) / (1000 * 60 * 60 * 24));
+
+  // Map into 1994
+  const mapped = new Date(1994, 0, 1);
+
+  // Shift backward by 1 day so 9/22/2026 → 8/2/1994
+  mapped.setDate(mapped.getDate() + dayOfYear - 1);
+
+  // Format
+  const months = [
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December"
+  ];
+
+  const month = months[mapped.getMonth()];
+  const day = mapped.getDate();
+  const year = mapped.getFullYear();
+
+  return `${month} ${day}, ${year}`;
+}
+

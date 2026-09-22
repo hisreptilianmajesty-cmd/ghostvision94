@@ -63,18 +63,42 @@ function sanitize(str) {
 }
 
 // ===============================
+// Safe Timestamp Parser (Fixes NaN)
+// ===============================
+
+function parseSheetTimestamp(ts) {
+  // Example formats:
+  // "9/22/2026 12:41 PM"
+  // "9/22/26 12:41:00 PM"
+
+  const parts = ts.split(" ");
+  const datePart = parts[0];      // "9/22/2026"
+  const timePart = parts[1];      // "12:41" or "12:41:00"
+  const ampm = parts[2] || "AM";  // "PM" or "AM"
+
+  const [month, day, yearRaw] = datePart.split("/").map(Number);
+  const year = yearRaw < 100 ? 2000 + yearRaw : yearRaw;
+
+  let [hours, minutes] = timePart.split(":").map(Number);
+
+  // Convert to 24-hour
+  if (ampm === "PM" && hours !== 12) hours += 12;
+  if (ampm === "AM" && hours === 12) hours = 0;
+
+  return new Date(year, month - 1, day, hours, minutes);
+}
+
+// ===============================
 // 1994 Date Mapping (Option B)
 // Today (9/22/2026) → August 2, 1994
 // ===============================
 
 function mapTo1994(dateString) {
-  const realDate = new Date(dateString);
+  const realDate = parseSheetTimestamp(dateString);
 
-  // Day-of-year for the real date
   const startOfYear = new Date(realDate.getFullYear(), 0, 1);
   const dayOfYear = Math.floor((realDate - startOfYear) / (1000 * 60 * 60 * 24));
 
-  // Map into 1994
   const mapped = new Date(1994, 0, 1);
 
   // Shift backward by 1 day so 9/22/2026 → 8/2/1994
@@ -93,7 +117,7 @@ function mapTo1994(dateString) {
 }
 
 function mapTimeTo1994(dateString) {
-  const realDate = new Date(dateString);
+  const realDate = parseSheetTimestamp(dateString);
 
   let hours = realDate.getHours();
   const minutes = String(realDate.getMinutes()).padStart(2, "0");
